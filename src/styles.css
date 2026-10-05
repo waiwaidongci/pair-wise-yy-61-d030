@@ -134,8 +134,11 @@ button, input, textarea, select { font: inherit; }
 .signoff-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #edf1f3; }
 .signoff-row > div span, .signoff-row > div strong, .signoff-row > div small { display: block; }
 .signoff-row > div span { color: var(--muted); font-size: 9px; }
-.signoff-row > div strong { font-size: 11px; margin: 4px 0; }
-.signoff-row > div small { font-size: 9px; color: var(--muted); }
+.signoff-row > div strong { font-size: 11px; margin: 4px 0; display: flex; align-items: center; gap: 6px; }
+.signoff-row > div small { font-size: 9px; color: var(--muted); margin-top: 2px; }
+.signoff-row > div small.evt { color: #8aa0b0; margin-top: 4px; }
+.signoff-row.invalidated { opacity: .62; }
+.review-actions { display: flex; gap: 6px; flex: none; }
 .release-gate-card { padding: 16px; }
 .release-gate-card > svg { color: #1f628d; }
 .release-gate-card h3 { margin: 10px 0; font-size: 13px; }
@@ -155,6 +158,62 @@ button, input, textarea, select { font: inherit; }
 .audit-row strong { font-size: 11px; }
 .audit-row p { margin: 5px 0; font-size: 10px; color: #596c78; }
 .audit-row small { font-size: 9px; color: var(--muted); }
+
+/* 签署对话框 */
+.candidate-list { display: flex; flex-direction: column; gap: 6px; margin: 12px 0 4px; }
+.candidate-option { display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; }
+.candidate-option:hover { background: #f7fafb; }
+.candidate-option.selected { border-color: #2875a8; background: #f2f8fc; }
+.candidate-option .fui-Radio { flex: none; }
+.candidate-main { min-width: 90px; }
+.candidate-main strong, .candidate-main small { display: block; }
+.candidate-main strong { font-size: 12px; }
+.candidate-main small { color: var(--muted); font-size: 9px; margin-top: 2px; }
+.candidate-qual { margin-left: auto; text-align: right; }
+.candidate-qual span, .candidate-qual small { display: block; }
+.candidate-qual span { font-size: 10px; color: #245b7e; }
+.candidate-qual small { color: var(--muted); font-size: 9px; margin-top: 2px; }
+.force-fail-check { display: flex; gap: 8px; align-items: center; margin-top: 12px; padding: 10px 11px; border: 1px dashed #d7c4a3; background: #fffaf0; border-radius: 5px; }
+.force-fail-check strong, .force-fail-check small { display: block; }
+.force-fail-check strong { font-size: 11px; }
+.force-fail-check small { color: var(--muted); font-size: 9px; margin-top: 2px; }
+
+/* 授权链面板 */
+.chain-panel .panel-head span { margin-top: 3px; }
+.chain-rows { padding: 8px 0; }
+.chain-row { display: flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 10px; }
+.chain-card { width: 64px; flex: none; font-weight: 700; color: #263f50; }
+.chain-card small { display: block; color: var(--muted); font-weight: 400; font-size: 8px; margin-top: 2px; }
+.chain-arrow { color: #9aaab5; flex: none; }
+.chain-qual, .chain-sign, .chain-base { padding: 2px 7px; border-radius: 4px; font-size: 9px; white-space: nowrap; }
+.chain-qual.ok, .chain-sign.ok, .chain-base.ok { background: #e0f2ea; color: var(--green); }
+.chain-qual.miss, .chain-sign.miss, .chain-base { background: #fdeceb; color: var(--red); }
+.chain-actions { display: flex; gap: 7px; padding: 8px 14px 12px; flex-wrap: wrap; }
+
+/* 人员资质列表 */
+.personnel-list { padding: 4px 14px 14px; }
+.person-row { padding: 11px 0; border-top: 1px solid #edf1f3; }
+.person-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.person-head strong { font-size: 12px; }
+.person-head small { color: var(--muted); font-size: 9px; }
+.qual-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 7px 0; }
+.qual-chip { display: flex; align-items: center; gap: 6px; padding: 3px 7px; border: 1px solid var(--line); border-radius: 4px; font-size: 9px; background: #f7fafb; }
+.qual-chip small { color: var(--muted); }
+.qual-chip.撤回 { background: #fdeceb; border-color: #f0c4c3; }
+.qual-chip.换岗 { background: #fff6e8; border-color: #ecd9b6; }
+
+/* 放行基线卡片 */
+.baseline-card dl { margin: 0; }
+.baseline-card dl div { padding: 9px 14px; border-bottom: 1px solid #edf1f3; }
+.baseline-card dl div:last-child { border-bottom: 0; }
+.baseline-card dt { color: var(--muted); font-size: 9px; }
+.baseline-card dd { margin: 3px 0 0; font-size: 11px; font-weight: 600; }
+
+@media (max-width: 760px) {
+  .chain-row { flex-wrap: wrap; }
+  .candidate-option { flex-wrap: wrap; }
+  .candidate-qual { margin-left: 0; text-align: left; width: 100%; }
+}
 
 @media (max-width: 1100px) {
   .overview-grid, .execution-grid, .release-grid, .audit-grid { grid-template-columns: 1fr; }

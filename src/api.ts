@@ -67,8 +67,17 @@ export const maintenanceApi = createApi({
         return { data: { accepted: true, revision: packageData.serverRevision + 1 } };
       },
       invalidatesTags: ['Package']
+    }),
+    signStage: builder.mutation<{ accepted: boolean; eventId: string }, { stage: string; cardId: string; actorId: string; eventId: string; forceFail?: boolean }>({
+      queryFn: async (payload) => {
+        await new Promise((resolve) => setTimeout(resolve, 220));
+        if (payload.forceFail) {
+          return { error: { status: 503, data: { message: '写入失败：签字服务暂时不可用，草稿与事件号已保留。', eventId: payload.eventId } } };
+        }
+        return { data: { accepted: true, eventId: payload.eventId } };
+      }
     })
   })
 });
 
-export const { useGetWorkPackageQuery, useSubmitCardMutation } = maintenanceApi;
+export const { useGetWorkPackageQuery, useSubmitCardMutation, useSignStageMutation } = maintenanceApi;
