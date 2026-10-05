@@ -49,6 +49,45 @@ const mockBaseQuery: BaseQueryFn = async (arg) => {
   return { error: { status: 404, data: 'Not found' } };
 };
 
+// 模拟签字服务端：按「阶段+角色」占用槽位，先到先得；同 eventId 幂等重试不多签
+const committedSlots = new Map<string, { eventId: string; serverSeq: number }>();
+let signSequence = 100;
+let failWrites = false;
+export const setFailWrites = (fail: boolean) => { failWrites = fail; };
+
+// 授权范围变化（资质撤回/换岗/代班停用）后，未放行的槽位释放，允许重新签署
+export const releaseSlot = (stage: string, role: string) => {
+  committedSlots.delete(`${stage}:${role}`);
+};
+
+export type SignRequest = {
+  eventId: string;
+  stage: string;
+  role: '执行' | '复核';
+  personId: string;
+  certNo?: string;
+  actingId?: string;
+};
+
+// 服务端签字仲裁：槽位先到先得；同 eventId 幂等；写入失败时不占槽位
+export async function mockSignServer(payload: SignRequest): Promise<{ data: { accepted: boolean; serverSeq: number; duplicate: boolean } } | { error: { status: number; data: { message: string; serverSeq?: number } } }> {
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  if (failWrites) {
+    return { error: { status: 0, data: { message: '写入失败：连接中断，草稿与事件号已保留。' } } };
+  }
+  const key = `${payload.stage}:${payload.role}`;
+  const held = committedSlots.get(key);
+  if (held) {
+    if (held.eventId === payload.eventId) {
+      return { data: { accepted: true, serverSeq: held.serverSeq, duplicate: true } };
+    }
+    return { error: { status: 409, data: { message: '该阶段签字槽位已有先生效签字，本次提交保留待复核。', serverSeq: held.serverSeq } } };
+  }
+  const serverSeq = ++signSequence;
+  committedSlots.set(key, { eventId: payload.eventId, serverSeq });
+  return { data: { accepted: true, serverSeq, duplicate: false } };
+}
+
 export const maintenanceApi = createApi({
   reducerPath: 'maintenanceApi',
   baseQuery: mockBaseQuery,
@@ -67,8 +106,11 @@ export const maintenanceApi = createApi({
         return { data: { accepted: true, revision: packageData.serverRevision + 1 } };
       },
       invalidatesTags: ['Package']
+    }),
+    submitSignature: builder.mutation<{ accepted: boolean; serverSeq: number; duplicate: boolean }, SignRequest>({
+      queryFn: async (payload) => mockSignServer(payload)
     })
   })
 });
 
-export const { useGetWorkPackageQuery, useSubmitCardMutation } = maintenanceApi;
+export const { useGetWorkPackageQuery, useSubmitCardMutation, useSubmitSignatureMutation } = maintenanceApi;

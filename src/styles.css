@@ -183,3 +183,54 @@ button, input, textarea, select { font: inherit; }
   .wide-field { grid-column: auto; }
   .evidence-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- 授权链扩展样式 ---------- */
+.user-switch select { background: #0c2d4b; color: white; border: 1px solid #43657e; border-radius: 4px; margin-left: 4px; max-width: 130px; }
+.sig-detail { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sig-detail strong { font-size: 11px; display: flex; align-items: center; gap: 6px; }
+.sig-detail small { font-size: 9px; color: var(--muted); }
+.sig-detail .cert-ok { color: var(--green); }
+.sig-detail .cert-missing { color: var(--red); }
+.sig-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.sig-badges .fui-Badge { font-size: 9px; }
+.chain-block { border-bottom: 1px solid #edf1f3; padding: 12px 14px; }
+.chain-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.chain-head strong { font-size: 12px; }
+.chain-role { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; padding: 6px 0; align-items: start; }
+.chain-role-name { font-size: 11px; font-weight: 700; color: #34576e; padding-top: 6px; }
+.chain-rows { display: flex; flex-direction: column; gap: 6px; }
+.chain-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 5px; padding: 8px 10px; background: #fafcfd; }
+.chain-row.chain-有效 { border-color: #bfe0cf; background: #f3faf6; }
+.chain-row.chain-待复核 { border-color: #e7cf9d; background: #fffaf0; }
+.chain-row.chain-待换签, .chain-row.chain-失效 { border-color: #e3b3b2; background: #fdf4f4; }
+.chain-actions { display: flex; align-items: center; gap: 6px; flex: none; }
+.chain-empty { color: var(--muted); font-size: 10px; padding: 4px 0; }
+.chain-role > .fui-Button { grid-column: 2; justify-self: start; }
+.draft-list { border-top: 1px solid #edf1f3; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; background: #fff9ef; }
+.draft-list > strong { font-size: 11px; color: #8c5818; }
+.draft-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 10px; }
+.snapshot-list { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.auth-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 15px; align-items: start; }
+.auth-side { display: grid; gap: 15px; }
+.person-row { padding: 12px 14px; border-bottom: 1px solid #edf1f3; }
+.person-head { display: flex; align-items: baseline; gap: 8px; }
+.person-head strong { font-size: 12px; }
+.person-head span { font-size: 10px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.qual-list { margin: 8px 0; display: flex; flex-direction: column; gap: 5px; }
+.qual-row { display: flex; align-items: center; gap: 10px; font-size: 11px; }
+.qual-row small { color: var(--muted); font-size: 9px; }
+.person-actions { display: flex; gap: 6px; }
+.shift-block { padding: 10px 14px; border-bottom: 1px solid #edf1f3; display: flex; flex-direction: column; gap: 4px; }
+.shift-block strong { font-size: 11px; display: flex; gap: 6px; align-items: center; }
+.shift-block small { font-size: 10px; color: #526570; }
+.acting-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #edf1f3; }
+.acting-row > div { display: flex; flex-direction: column; gap: 2px; }
+.acting-row strong { font-size: 11px; }
+.acting-row small { font-size: 9px; color: var(--muted); }
+.chain-tester .tester-controls { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.chain-tester select { height: 32px; border: 1px solid #ccd6dd; border-radius: 4px; padding: 0 8px; }
+.chain-tester small { font-size: 10px; color: #8c5818; line-height: 1.5; }
+.release-gate-card label { align-items: flex-start; gap: 8px; }
+.release-gate-card label span { display: flex; flex-direction: column; }
+.release-gate-card label small { color: var(--muted); font-size: 9px; }
+@media (max-width: 1100px) { .auth-grid { grid-template-columns: 1fr; } }
